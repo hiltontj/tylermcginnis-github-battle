@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import Popular from './components/Popular.js'
+import Battle from './components/Battle.js'
 
 class App extends React.Component {
    render() {
@@ -9,7 +10,7 @@ class App extends React.Component {
 
       return (
          <div className="container">
-            <Popular />
+            <Battle />
          </div>
       )
    }
