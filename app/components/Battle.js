@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaUserFriends, FaFighterJet, FaTrophy, FaUser, FaTimesCircle } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import Results from './Results'
 
 function Instructions() {
    return (
@@ -85,7 +86,7 @@ function PlayerPreview({ username, onReset, label }) {
          <div className='row bg-light'>
             <div className='player-info'>
                <img 
-                  className='avatar-sm'
+                  className='avatar-small'
                   src={`https://github.com/${username}.png?size=200`}
                   alt={`Avatar for ${username}`}
                />
@@ -113,7 +114,8 @@ export default class Battle extends React.Component {
 
       this.state = {
          playerOne: null,
-         playerTwo: null
+         playerTwo: null,
+         battle:    false
       }
 
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -133,7 +135,16 @@ export default class Battle extends React.Component {
    }
 
    render() {
-      const { playerOne, playerTwo } = this.state
+      const { playerOne, playerTwo, battle } = this.state
+
+      if (battle) {
+         return (
+            <Results 
+              playerOne={playerOne} 
+              playerTwo={playerTwo}>
+            </Results>
+         )
+      }
 
       return(
          <React.Fragment>
@@ -173,6 +184,14 @@ export default class Battle extends React.Component {
                      )
                   }
                </div>
+               {playerOne && playerTwo && (
+                  <button 
+                    className="btn btn-dark btn-space"
+                    onClick={() => {this.setState({battle: true})}}
+                  >
+                     Battle!
+                  </button>
+               )}
             </div>
          </React.Fragment>
       )
