@@ -3,22 +3,88 @@ import { battle } from '../utils/api'
 import { FaCompass,  FaBriefcase, FaUsers, FaUserFriends, FaCode, FaUser } from 'react-icons/fa'
 import Card from './Card'
 import PropTypes from 'prop-types'
+import Loading from './Loading';
 
-function ProfileList ({ profile }) {
-   return (
-      <ul className="card-list">
+// styles for tooltip - TODO - move to separate ToolTip component later
+const styles = {
+   container: {
+     position: 'relative',
+     display: 'flex'
+   },
+   tooltip: {
+     boxSizing: 'border-box',
+     position: 'absolute',
+     width: '160px',
+     bottom: '100%',
+     left: '50%',
+     marginLeft: '-80px',
+     borderRadius: '3px',
+     backgroundColor: 'hsla(0, 0%, 20%, 0.9)',
+     padding: '7px',
+     marginBottom: '5px',
+     color: '#fff',
+     textAlign: 'center',
+     fontSize: '14px',
+   }
+ }
+
+class ProfileList extends React.Component {
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         hoveringLocation : false,
+         hoveringCompany : false
+      }
+
+      this.mouseOut = this.mouseOut.bind(this);
+      this.mouseOver = this.mouseOver.bind(this);
+   }
+
+   mouseOver(id) {
+      this.setState({
+         [id] : true
+      })
+   }
+
+   mouseOut(id) {
+      this.setState({
+         [id] : false
+      })
+   }
+
+   render() {
+      const { profile } = this.props;
+      const { hoveringLocation, hoveringCompany } = this.state;
+
+      return (
+         <ul className="card-list">
          <li>
             <FaUser color="rgb(239, 115, 115)" size={22}/>
             {profile.name}
          </li>
          {profile.location && (
-            <li>
+            <li
+               style={styles.container}
+               onMouseOver={() => this.mouseOver("hoveringLocation")}
+               onMouseOut={() => this.mouseOut("hoveringLocation")}
+            >
+               {hoveringLocation == true && 
+                  <div style={styles.tooltip}>User's location</div>
+               }
                <FaCompass color="rgb(144, 115, 255)" size={22}/>
                {profile.location}
             </li>
          )}
          {profile.company && (
-            <li>
+            <li
+               style={styles.container}
+               onMouseOver={() => this.mouseOver("hoveringCompany")}
+               onMouseOut={() => this.mouseOut("hoveringCompany")}
+            >
+               {hoveringCompany == true && 
+                  <div style={styles.tooltip}>User's company</div>
+               }
                <FaBriefcase color="#795548" size={22}/>
                {profile.company}
             </li>
@@ -32,7 +98,8 @@ function ProfileList ({ profile }) {
             {profile.following.toLocaleString()} follows
          </li>
       </ul>
-   )
+      )
+   }
 }
 
 ProfileList.propTypes = {
@@ -75,7 +142,7 @@ export default class Result extends React.Component {
 
       if ( loading ) {
          return (
-            <p>LOADING...</p>
+            <Loading text="Duking it out"/>
          )
       }
 
