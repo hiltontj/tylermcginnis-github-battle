@@ -1,3 +1,7 @@
+// withHover
+// Higher-order component for making components "hoverable"
+// * also implemented is Hover, which does the same thing,
+// but uses render props instead.
 import React from 'react'
 
 export default function withHover(Component, hoverPropName='hovering') {
