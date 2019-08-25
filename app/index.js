@@ -5,6 +5,7 @@ import Popular from './components/Popular.js'
 import Battle from './components/Battle.js'
 import { ThemeProvider } from './contexts/theme.js'
 import Nav from './components/Nav.js'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends React.Component {
    constructor(props) {
@@ -23,15 +24,18 @@ class App extends React.Component {
       const name = "Trevor";
 
       return (
-         <ThemeProvider value={this.state}>
-            <div className={this.state.theme}>
-               <div className="container">
-                  <Nav />
-                  <Popular />
+         <Router>
+            <ThemeProvider value={this.state}>
+               <div className={this.state.theme}>
+                  <div className="container">
+                     <Nav />
+                     
+                     <Route exact path='/' component={Popular} />
+                     <Route path='/battle' component={Battle} />
+                  </div>
                </div>
-            </div>
-         </ThemeProvider>
-
+            </ThemeProvider>
+         </Router>
       )
    }
 }
