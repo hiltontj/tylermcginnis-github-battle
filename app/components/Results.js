@@ -48,15 +48,11 @@ ProfileList.propTypes = {
 }
 
 export default class Result extends React.Component {
-   constructor(props) {
-      super(props);
-
-      this.state = {
-         winner: null,
-         loser: null,
-         error: null,
-         loading: true
-      }
+   state = {
+      winner: null,
+      loser: null,
+      error: null,
+      loading: true
    }
 
    componentDidMount() {
@@ -126,9 +122,4 @@ export default class Result extends React.Component {
          </React.Fragment>
       )
    }
-}
-
-Result.propTypes = {
-   playerOne : PropTypes.string.isRequired,
-   playerTwo : PropTypes.string.isRequired
 }

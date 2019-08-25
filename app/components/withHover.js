@@ -6,24 +6,17 @@ import React from 'react'
 
 export default function withHover(Component, hoverPropName='hovering') {
    return class WthHover extends React.Component {
-      constructor(props) {
-         super(props);
-   
-         this.state = {
-            hovering : false
-         }
-   
-         this.mouseOut = this.mouseOut.bind(this);
-         this.mouseOver = this.mouseOver.bind(this);
+      state = {
+         hovering : false
       }
-   
-      mouseOver() {
+      
+      mouseOver = () => {
          this.setState({
             hovering : true
          })
       }
    
-      mouseOut(id) {
+      mouseOut = (id) => {
          this.setState({
             hovering : false
          })
