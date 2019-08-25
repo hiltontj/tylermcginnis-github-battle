@@ -8,7 +8,7 @@ You will need to [create a new GitHub OAuth app](https://developer.github.com/ap
 
 ## Launching Application
 
-You can run either in development using:
+You can run a `webpack-dev-server` using:
 ```
 npm run start
 ```
