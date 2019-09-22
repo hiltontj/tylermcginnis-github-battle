@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { ThemeProvider } from './contexts/theme.js'
+import ThemeContext from './contexts/theme.js'
 import Nav from './components/Nav.js'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Loading from './components/Loading'
@@ -19,10 +19,10 @@ function App() {
 
    return (
       <Router>
-         <ThemeProvider value={{theme, toggleTheme}}>
+         <ThemeContext.Provider value={{theme, toggleTheme}}>
             <div className={theme}>
                <div className="container">
-                  <Nav />
+                  <Nav toggleTheme={toggleTheme}/>
                   
                   <React.Suspense fallback={<Loading />}>
                      <Switch>
@@ -34,7 +34,7 @@ function App() {
                   </React.Suspense>
                </div>
             </div>
-         </ThemeProvider>
+         </ThemeContext.Provider>
       </Router>
    )
 }
