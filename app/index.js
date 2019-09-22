@@ -10,43 +10,33 @@ const Popular = React.lazy(() => import('./components/Popular.js'))
 const Battle = React.lazy(() => import('./components/Battle.js'))
 const Results = React.lazy(() => import('./components/Results'))
 
-class App extends React.Component {
-   constructor(props) {
-      super(props)
+function App() {
+   const [theme, setTheme] = React.useState('light')
 
-      this.state = {
-         theme : 'light',
-         toggleTheme : () => {
-            this.setState(({ theme }) => ({
-               theme : theme === 'light' ? 'dark' : 'light'
-            }))
-         }
-      }
+   const toggleTheme = () => {
+      setTheme((t) => t === 'light' ? 'dark' : 'light')
    }
-   render() {
-      const name = "Trevor";
 
-      return (
-         <Router>
-            <ThemeProvider value={this.state}>
-               <div className={this.state.theme}>
-                  <div className="container">
-                     <Nav />
-                     
-                     <React.Suspense fallback={<Loading />}>
-                        <Switch>
-                           <Route exact path='/' component={Popular} />
-                           <Route exact path='/battle' component={Battle} />
-                           <Route path='/battle/results' component={Results} />
-                           <Route render={() => (<h1>404 Not Found.</h1>)} />
-                        </Switch>
-                     </React.Suspense>
-                  </div>
+   return (
+      <Router>
+         <ThemeProvider value={{theme, toggleTheme}}>
+            <div className={theme}>
+               <div className="container">
+                  <Nav />
+                  
+                  <React.Suspense fallback={<Loading />}>
+                     <Switch>
+                        <Route exact path='/' component={Popular} />
+                        <Route exact path='/battle' component={Battle} />
+                        <Route path='/battle/results' component={Results} />
+                        <Route render={() => (<h1>404 Not Found.</h1>)} />
+                     </Switch>
+                  </React.Suspense>
                </div>
-            </ThemeProvider>
-         </Router>
-      )
-   }
+            </div>
+         </ThemeProvider>
+      </Router>
+   )
 }
 
 // takes two things:
