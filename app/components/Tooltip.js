@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import withHover from './withHover' // old high order component style hover
-import Hover from './Hover' // new render prop style hover
 import useHover from '../custom-hooks/useHover'
 
 const styles = {
