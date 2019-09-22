@@ -44,7 +44,7 @@ const initialReposState = {
 
 function reposReducer(state, action) {
    const {type, repos, error} = action
-   console.log(type)
+   
    switch(type) {
       case 'loading':
          return { loading : true}
