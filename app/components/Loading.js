@@ -25,7 +25,7 @@ export default function Loading({ text, speed}) {
       return () => window.clearInterval(id)
    }, [text])
 
-   return <p style={styles.content}>{this.state.content}</p>
+   return <p style={styles.content}>{content}</p>
 }
 
 
