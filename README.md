@@ -1,6 +1,6 @@
 # Tyler McGinnis's React Course
 
-This is the working repo that I am using for the React course from [tylermcginnis.com](https://tylermcginnis.com/).
+This is the working repo that I am using for the React course from [tylermcginnis.com](https://tylermcginnis.com/). This repo contains a working React project; namely, the "Github Battle" project that one builds by taking the course.
 
 ## React Hooks!
 
