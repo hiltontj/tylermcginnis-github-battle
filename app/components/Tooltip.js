@@ -25,11 +25,10 @@ const styles = {
  }
 
 export default function Tooltip({ text, children}) {
-   const targetRef = React.useRef()
-   const hovering = useHover(targetRef)
+   const [hovering, attrs] = useHover()
 
    return (
-      <div ref={targetRef} style={styles.container}>
+      <div style={styles.container} {...attrs}>
          {hovering === true && <div style={styles.tooltip}>{text}</div>}
          {children}
       </div>
