@@ -43,15 +43,22 @@ const initialReposState = {
 }
 
 function reposReducer(state, action) {
-   const {type, repos, error} = action
+   const {type, repos, error, language} = action
    
    switch(type) {
       case 'loading':
-         return { loading : true}
+         return { ...state, loading : true}
       case 'display':
-         return { loading : false, repos : repos, error : null }
+         return { 
+            ...state,
+            loading : false,
+            repos : {
+               ...state.repos,
+               [language] : repos
+            }
+         }
       case 'error':
-         return { loading : false, repos : null, error : error}
+         return { ...state, loading : false, error : error}
       default:
          throw new Error("A problem occurred while reducing the repos, please help.")
    }
@@ -61,14 +68,20 @@ function ReposGrid({language}) {
    const [state, dispatch] = React.useReducer(reposReducer, initialReposState)
    const { loading, repos, error } = state
 
-   React.useEffect(() => {
-      dispatch({type:'loading'})
-      fetchPopularRepos(language)
-         .then((r) => dispatch({type : 'display', repos : r}))
-         .catch(({message}) => dispatch({type : 'error', error : message}))
-   }, [language])
+   const fetchedLanguages = React.useRef([])
 
-   if ( loading ) {
+   React.useEffect(() => {
+      if ( fetchedLanguages.current.includes(language) === false ) {
+         fetchedLanguages.current.push(language)
+         dispatch({type:'loading'})
+         fetchPopularRepos(language)
+            .then((r) => dispatch({type : 'display', repos : r, language}))
+            .catch(({message}) => dispatch({type : 'error', error : message}))
+      }
+      
+   }, [fetchedLanguages, language])
+
+   if ( loading || ! repos[language]) {
       return <Loading text="Fetching Ze Repos" />
    }
 
@@ -78,7 +91,7 @@ function ReposGrid({language}) {
 
    return (
       <ul className='grid space-around'>
-         {repos.map((repo, index) => {
+         {repos[language].map((repo, index) => {
             const {name, owner, html_url, stargazers_count, forks, open_issues} = repo;
             const {login, avatar_url} = owner;
 
@@ -131,7 +144,7 @@ export default function Popular() {
       <React.Fragment>
          <LanguagesNav
             selected={selectedLanguage} 
-            onUpdateLanguage={(language) => setSelectedLanguage(language)}
+            onUpdateLanguage={setSelectedLanguage}
          />
          <ReposGrid language={selectedLanguage} />
       </React.Fragment>
