@@ -4,7 +4,7 @@ This is the working repo that I am using for the React course from [tylermcginni
 
 ## React Hooks!
 
-_NOTE: I am currently in the process of refactoring this project to make use of React Hooks! `git checkout hooks` (i.e. checkout the hooks branch) to see these changes._
+_I have completed refactoring this project to make use of React Hooks and merged the changes into `master`._
 
 ## Setup
 
